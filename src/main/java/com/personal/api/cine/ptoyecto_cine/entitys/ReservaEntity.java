@@ -13,7 +13,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data @Builder @AllArgsConstructor @NoArgsConstructor
-@Table(name = "reservaciones") @Entity
+@Entity
+@Table(name = "reservaciones") 
 public class ReservaEntity {
 
     @Id

@@ -1,4 +1,7 @@
 package com.personal.api.cine.ptoyecto_cine.models.request;
+import java.util.Set;
+
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -7,10 +10,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor @Data @Builder @NoArgsConstructor
 public class UsuarioRequest {
 
+    private Long id;
     private String nombre;
     private String apellido;
     private Integer edad;
     private String email;
     private String password;
+    private Set<Long> reserva;
 
 }

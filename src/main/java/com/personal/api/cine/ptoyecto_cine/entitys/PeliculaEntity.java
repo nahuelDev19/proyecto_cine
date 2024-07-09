@@ -14,7 +14,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data @Builder @AllArgsConstructor @NoArgsConstructor
-@Table(name = "peliculas")  @Entity
+@Entity
+@Table(name = "peliculas")  
 public class PeliculaEntity {
 
 
@@ -26,6 +27,6 @@ public class PeliculaEntity {
     private Integer duracion;
     private String genero;
 
-    @OneToMany
+    @OneToMany(mappedBy = "pelicula") // Relación inversa: una película puede tener muchas funciones
     private Set<FuncionEntity> funciones;
 }

@@ -1,5 +1,6 @@
 package com.personal.api.cine.ptoyecto_cine.entitys;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import jakarta.persistence.Entity;
@@ -14,7 +15,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data @Builder @AllArgsConstructor @NoArgsConstructor
-@Table(name ="usuarios") @Entity
+@Entity
+@Table(name ="usuarios") 
 public class UsuarioEntity {
 
 
@@ -28,7 +30,14 @@ public class UsuarioEntity {
     private String email;
     private String password;
 
-    @OneToMany
-    private Set<ReservaEntity> reserva;
+    @OneToMany 
+    private Set<ReservaEntity> reservas = new HashSet<>();
 
+    public void addReserva(ReservaEntity reserva) {
+        reservas.add(reserva);
+    }
+
+    public void removeReserva(ReservaEntity reserva) {
+        reservas.remove(reserva);
+    }
 }

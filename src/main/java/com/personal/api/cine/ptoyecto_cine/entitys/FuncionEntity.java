@@ -8,6 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -16,17 +17,19 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data @Builder @AllArgsConstructor @NoArgsConstructor
-@Table(name = "funciones") @Entity
+@Entity
+@Table(name = "funciones") 
 public class FuncionEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private PeliculaEntity pelicula;
     private LocalDate fecha;
     private LocalTime hora;
     private String sala;
 
     @OneToMany
     private Set<ReservaEntity> reserva;
+    @ManyToOne // Indica que muchas funciones pertenecen a una película
+    private PeliculaEntity pelicula;
 }

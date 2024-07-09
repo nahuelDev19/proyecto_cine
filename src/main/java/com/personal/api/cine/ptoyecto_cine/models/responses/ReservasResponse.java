@@ -1,21 +1,16 @@
 package com.personal.api.cine.ptoyecto_cine.models.responses;
 
-import java.util.Set;
-
+import com.personal.api.cine.ptoyecto_cine.entitys.FuncionEntity;
 
 import lombok.AllArgsConstructor;
+
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @AllArgsConstructor @Data @Builder @NoArgsConstructor
-public class UsuarioResponse {
+public class ReservasResponse {
 
-    private Long id;
-    private String nombre;
-    private String apellido;
-    private Integer edad;
-    private String email;
-    private Set<ReservasResponse> reserva;
-
+    private FuncionEntity funcion;
+    private Integer cantidadDeEntradas;
 }

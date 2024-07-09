@@ -4,8 +4,8 @@ public interface ICrudService <RQ,RS,ID>{
 
     RS create(RQ rq);
     RS read(ID id);
-    RS update(RQ rq);
-    Void delete (ID id);
+    RS update(RQ rq,ID id);
+    void delete (ID id);
 
 
 }
