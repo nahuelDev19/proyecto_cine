@@ -29,6 +29,7 @@ public class ReservaEntity {
     @JoinColumn(name = "funcion_id")
     private FuncionEntity funcion;
     private Integer cantidadDeEntradas;
+    private Integer total;
 
 
 
