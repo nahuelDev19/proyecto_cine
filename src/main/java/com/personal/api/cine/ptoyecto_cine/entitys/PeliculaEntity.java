@@ -2,6 +2,8 @@ package com.personal.api.cine.ptoyecto_cine.entitys;
 
 import java.util.Set;
 
+import com.personal.api.cine.ptoyecto_cine.uitils.GeneroPelicula;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,7 +27,7 @@ public class PeliculaEntity {
     private String titulo;
     private String descripcion;
     private Integer duracion;
-    private String genero;
+    private GeneroPelicula genero;
 
     @OneToMany(mappedBy = "pelicula") // Relación inversa: una película puede tener muchas funciones
     private Set<FuncionEntity> funciones;

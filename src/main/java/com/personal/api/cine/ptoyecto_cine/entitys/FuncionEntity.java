@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Set;
 
+import com.personal.api.cine.ptoyecto_cine.uitils.SalaDeCine;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,7 +28,8 @@ public class FuncionEntity {
     private Long id;
     private LocalDate fecha;
     private LocalTime hora;
-    private String sala;
+    private SalaDeCine sala;
+    private Integer precio;
 
     @OneToMany
     private Set<ReservaEntity> reserva;
