@@ -1,5 +1,7 @@
 package com.personal.api.cine.ptoyecto_cine.repositorys;
 
+import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,4 +14,6 @@ public interface PeliculaRepository extends JpaRepository<PeliculaEntity,Long>{
 
     Page<PeliculaEntity> findByGenero(GeneroPelicula genero,Pageable pageable);
     Page<PeliculaEntity> findAll(Pageable pageable);
+    Optional<PeliculaEntity> findByTitulo(String titulo);
+
 }
