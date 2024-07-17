@@ -16,6 +16,6 @@ public class UsuarioRequest {
     private Integer edad;
     private String email;
     private String password;
-    private Set<Long> reserva;
+    
 
 }

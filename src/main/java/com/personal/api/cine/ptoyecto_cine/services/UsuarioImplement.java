@@ -27,7 +27,6 @@ public class UsuarioImplement implements IUsuarioService{
         user.setEmail(rq.getEmail());
         user.setEdad(rq.getEdad());
         user.setPassword(rq.getPassword());
-        user.setReservas(null);
         UsuarioEntity userCreate= usuarioRepository.save(user);
         return this.userResponse(userCreate);
     }

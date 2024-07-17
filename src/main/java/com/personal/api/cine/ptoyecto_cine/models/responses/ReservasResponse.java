@@ -12,6 +12,6 @@ public class ReservasResponse {
     private Long id;
     private UsuarioResponse usuario;
     private FuncionesResponse funcion;
-    private Integer total;    
     private Integer cantidadDeEntradas;
+    private Integer total;  
 }

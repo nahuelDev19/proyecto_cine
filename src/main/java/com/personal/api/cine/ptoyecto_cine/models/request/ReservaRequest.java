@@ -3,7 +3,9 @@ import lombok.*;
 
 @Data @Builder @AllArgsConstructor @NoArgsConstructor
 public class ReservaRequest {
-    private Long usuarioId;
-    private Long funcionId;
+    
+    
+    private UsuarioRequest usuario;
+    private FuncionRequest funcion;
     private Integer cantidadDeEntradas;
 }

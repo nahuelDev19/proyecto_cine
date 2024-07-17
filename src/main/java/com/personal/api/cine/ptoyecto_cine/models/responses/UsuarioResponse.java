@@ -1,6 +1,5 @@
 package com.personal.api.cine.ptoyecto_cine.models.responses;
 
-import java.util.Set;
 
 
 import lombok.AllArgsConstructor;
@@ -16,6 +15,5 @@ public class UsuarioResponse {
     private String apellido;
     private Integer edad;
     private String email;
-    private Set<ReservasResponse> reserva;
 
 }

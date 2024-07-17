@@ -9,7 +9,10 @@ import lombok.*;
 @Data @Builder @AllArgsConstructor @NoArgsConstructor
 
 public class FuncionRequest {
-private LocalDate fecha;
+
+
+    private Long id;
+    private LocalDate fecha;
     private LocalTime hora;
     private SalaDeCine sala;
     private Integer precio;

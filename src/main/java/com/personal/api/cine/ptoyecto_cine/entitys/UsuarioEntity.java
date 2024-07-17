@@ -30,14 +30,5 @@ public class UsuarioEntity {
     private String email;
     private String password;
 
-    @OneToMany 
-    private Set<ReservaEntity> reservas = new HashSet<>();
-
-    public void addReserva(ReservaEntity reserva) {
-        reservas.add(reserva);
-    }
-
-    public void removeReserva(ReservaEntity reserva) {
-        reservas.remove(reserva);
-    }
+    
 }
