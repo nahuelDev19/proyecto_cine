@@ -24,22 +24,24 @@ public class FuncionController {
 
 
     @PostMapping("/create")
-    public ResponseEntity<FuncionesResponse> create(@RequestBody FuncionRequest fun){
-        return ResponseEntity.ok(funcionService.create(fun));
+    public ResponseEntity<FuncionesResponse> createFuncion(@RequestBody FuncionRequest fun){
+        FuncionesResponse response= funcionService.create(fun);
+        return ResponseEntity.status(201).body(response);
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<FuncionesResponse> update(@PathVariable Long id,@RequestBody FuncionRequest fun){
-        return ResponseEntity.ok(funcionService.update(fun, id));
+    public ResponseEntity<FuncionesResponse> updateFuncion(@PathVariable Long id,@RequestBody FuncionRequest fun){
+        FuncionesResponse response= funcionService.update(fun, id);
+        return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/buscar/{id}")
-    public ResponseEntity<FuncionesResponse> read(@PathVariable Long id){
+    @GetMapping("/search/{id}")
+    public ResponseEntity<FuncionesResponse> readFuncion(@PathVariable Long id){
         return ResponseEntity.ok(funcionService.read(id));
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id){
+    public ResponseEntity<Void> deleteFuncion(@PathVariable Long id){
         funcionService.delete(id);
         return ResponseEntity.noContent().build();
     }

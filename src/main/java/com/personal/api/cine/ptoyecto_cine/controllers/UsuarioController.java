@@ -24,24 +24,24 @@ public class UsuarioController {
     @Autowired
     private UsuarioImplement usuarioService;
 
-    @PostMapping("/nuevo")
-    public ResponseEntity<UsuarioResponse> crearUsuario(@RequestBody UsuarioRequest param) {
+    @PostMapping("/create")
+    public ResponseEntity<UsuarioResponse> createUser(@RequestBody UsuarioRequest param) {
         return ResponseEntity.ok(usuarioService.create(param));
     }
     
 
-    @GetMapping("/{id}")
-    public ResponseEntity<UsuarioResponse> getUsuario(@PathVariable Long id){
+    @GetMapping("/search/{id}")
+    public ResponseEntity<UsuarioResponse> searchUser(@PathVariable Long id){
         return ResponseEntity.ok(usuarioService.read(id));
     }
 
-    @PutMapping("/actualizar/{id}")
-    public ResponseEntity<UsuarioResponse> updateUsuario(@PathVariable Long id,@RequestBody UsuarioRequest usuario){
+    @PutMapping("/update/{id}")
+    public ResponseEntity<UsuarioResponse> updateUser(@PathVariable Long id,@RequestBody UsuarioRequest usuario){
         return ResponseEntity.ok(usuarioService.update(usuario, id));
     }
 
-    @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<Void> eliminarUsuario(@PathVariable Long id){
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id){
         this.usuarioService.delete(id);
         return ResponseEntity.noContent().build();
     }

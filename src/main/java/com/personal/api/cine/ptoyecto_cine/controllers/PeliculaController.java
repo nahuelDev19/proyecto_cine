@@ -27,23 +27,12 @@ public class PeliculaController {
     @Autowired
     private PeliculaImplement peliService;
 
-    /*@GetMapping
-    public ResponseEntity<Page<HotelResponse>> geetAll(
-        @RequestParam Integer page,
-        @RequestParam Integer size,
-        @RequestHeader(required = false) SortType sortType){
-            if (Objects.isNull(sortType)) sortType= SortType.NONE;
-            var response= this.hotelService.reedAll(page, size, sortType);
-            return response.isEmpty()? ResponseEntity.noContent().build(): ResponseEntity.ok(response);
-        }
-    */
-
-    @PostMapping("/agregando")
-    public ResponseEntity<PeliculaResponse> create(@RequestBody PeliculaRequest request){
+    @PostMapping("/create")
+    public ResponseEntity<PeliculaResponse> createPeli(@RequestBody PeliculaRequest request){
         return ResponseEntity.ok(peliService.create(request));
     }
 
-    @GetMapping("/paginado")
+    @GetMapping("/page")
     public ResponseEntity<Page<PeliculaResponse>> getAll(
         @RequestParam(defaultValue = "0") Integer page,
         @RequestParam(defaultValue = "10") Integer size,
@@ -52,19 +41,19 @@ public class PeliculaController {
          return response.isEmpty()? ResponseEntity.noContent().build():ResponseEntity.ok(response);
         }
 
-    @PutMapping("actualizar/{id}")
-    public ResponseEntity<PeliculaResponse> update(@PathVariable Long id, @RequestBody PeliculaRequest entity) {        
+    @PutMapping("update/{id}")
+    public ResponseEntity<PeliculaResponse> updatePeli(@PathVariable Long id, @RequestBody PeliculaRequest entity) {        
         return ResponseEntity.ok(peliService.update(entity, id));
     }
 
-    @GetMapping("/buscar/{id}")
-    public ResponseEntity<PeliculaResponse> buscar(@PathVariable Long id){
+    @GetMapping("/search/{id}")
+    public ResponseEntity<PeliculaResponse> searchPeli(@PathVariable Long id){
         return ResponseEntity.ok(peliService.read(id));
     }
 
 
-    @DeleteMapping("eliminar/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id){
+    @DeleteMapping("delete/{id}")
+    public ResponseEntity<Void> deletePeli(@PathVariable Long id){
         peliService.delete(id);
         return ResponseEntity.noContent().build();
     }

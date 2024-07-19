@@ -24,23 +24,23 @@ public class ReservasController {
     private IReservaService reservaService;
 
     @PostMapping("/create")
-    public ResponseEntity<ReservasResponse> create(@RequestBody ReservaRequest entity) {        
+    public ResponseEntity<ReservasResponse> createReserva(@RequestBody ReservaRequest entity) {        
         return ResponseEntity.ok(reservaService.create(entity));
     }
 
-    @GetMapping("/buscar/{id}")
-    public ResponseEntity<ReservasResponse> buscar(@PathVariable Long id) {
+    @GetMapping("/search/{id}")
+    public ResponseEntity<ReservasResponse> searchReserva(@PathVariable Long id) {
         return ResponseEntity.ok(reservaService.read(id));
     }
     
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<ReservasResponse> update(@PathVariable Long id,@RequestBody ReservaRequest request){
+    public ResponseEntity<ReservasResponse> updateReserva(@PathVariable Long id,@RequestBody ReservaRequest request){
         return ResponseEntity.ok(reservaService.update(request, id));
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id){
+    public ResponseEntity<Void> deleteReserva(@PathVariable Long id){
         reservaService.delete(id);
         return ResponseEntity.noContent().build();
     }
