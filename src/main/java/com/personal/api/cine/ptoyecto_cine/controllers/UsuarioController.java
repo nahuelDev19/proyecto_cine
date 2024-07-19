@@ -7,6 +7,9 @@ import com.personal.api.cine.ptoyecto_cine.models.request.UsuarioRequest;
 import com.personal.api.cine.ptoyecto_cine.models.responses.UsuarioResponse;
 import com.personal.api.cine.ptoyecto_cine.services.UsuarioImplement;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,28 +22,33 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController @RequestMapping("/usuarios")
+@Tag(name = "usuarios", description = "Operaciones relacionadas con los usuarios")
 public class UsuarioController {
 
     @Autowired
     private UsuarioImplement usuarioService;
 
     @PostMapping("/create")
+    @Operation(summary = "Crear un nuevo usuario", description = "Crea un nuevo usuario con los detalles proporcionados")
     public ResponseEntity<UsuarioResponse> createUser(@RequestBody UsuarioRequest param) {
         return ResponseEntity.ok(usuarioService.create(param));
     }
     
 
     @GetMapping("/search/{id}")
+    @Operation(summary = "busca un usuario", description = "busca un usuario por su id")
     public ResponseEntity<UsuarioResponse> searchUser(@PathVariable Long id){
         return ResponseEntity.ok(usuarioService.read(id));
     }
 
     @PutMapping("/update/{id}")
+    @Operation(summary = "actualiza un usuario", description = "actualiza los detalles de un usuario")
     public ResponseEntity<UsuarioResponse> updateUser(@PathVariable Long id,@RequestBody UsuarioRequest usuario){
         return ResponseEntity.ok(usuarioService.update(usuario, id));
     }
 
     @DeleteMapping("/delete/{id}")
+    @Operation(summary = "elimina un usuario", description = "elimina un usuario segun su id")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id){
         this.usuarioService.delete(id);
         return ResponseEntity.noContent().build();
