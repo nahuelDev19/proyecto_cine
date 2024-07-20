@@ -37,7 +37,7 @@ public class UsuarioImplement implements IUsuarioService{
         return this.userResponse(buscado);
     }
 
-    @Override
+    /*@Override
     public UsuarioResponse update(UsuarioRequest rq, Long id) {
         Optional<UsuarioEntity> buscado= usuarioRepository.findById(id);
         if (buscado.isPresent()){
@@ -50,7 +50,36 @@ public class UsuarioImplement implements IUsuarioService{
         // Manejar el caso donde no se encuentra el usuario con el id dado
         throw new NoSuchElementException("Usuario no encontrado con id: " + id);
     }
+    }*/
+
+    @Override
+public UsuarioResponse update(UsuarioRequest rq, Long id) {
+    Optional<UsuarioEntity> buscado = usuarioRepository.findById(id);
+    if (buscado.isPresent()) {
+        UsuarioEntity user = buscado.get();
+
+        if (rq.getNombre() != null ) {
+            user.setNombre(rq.getNombre());
+        }
+        if (rq.getApellido() != null) {
+            user.setApellido(rq.getApellido());
+        }
+        if (rq.getEdad() != null) {
+            user.setEdad(rq.getEdad());
+        }
+        if (rq.getEmail() != null) {
+            user.setEmail(rq.getEmail());
+        }
+        if (rq.getPassword() != null) {
+            user.setPassword(rq.getPassword());
+        }
+
+        return userResponse(usuarioRepository.save(user));
+    } else {
+        throw new NoSuchElementException("Usuario no encontrado con id: " + id);
     }
+}
+
 
     @Override
     public void delete(Long id) {

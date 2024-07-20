@@ -1,7 +1,5 @@
 package com.personal.api.cine.ptoyecto_cine.services;
 
-import java.util.NoSuchElementException;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,9 +31,9 @@ public class ReservasImplement implements IReservaService{
     @Override
     public ReservasResponse create(ReservaRequest rq) {
         ReservaEntity reser= new ReservaEntity();
-        if(rq.getUsuario() !=null && rq.getUsuario().getId() !=null){
-            UsuarioEntity user= usuarioRepository.findById(rq.getUsuario().getId()).orElseThrow(()-> new RuntimeException(
-                "usuario no encontrado con el id: "+rq.getUsuario().getId()
+        if(rq.getUsuario() !=null && rq.getUsuario().getNombre() !=null){
+            UsuarioEntity user= usuarioRepository.findByNombre(rq.getUsuario().getNombre()).orElseThrow(()-> new RuntimeException(
+                "usuario no encontrado con el id: "+rq.getUsuario().getNombre()
             ));
         reser.setUsuario(user);}else{
             throw new RuntimeException("el usuario es necesario para crear una reserva");
@@ -66,14 +64,12 @@ public class ReservasImplement implements IReservaService{
         reser.setCantidadDeEntradas(rq.getCantidadDeEntradas());
         if(rq.getUsuario()!=null){
             UsuarioEntity user= usuarioRepository.findByNombreAndApellido(rq.getUsuario().getNombre(),rq.getUsuario().getApellido()).orElseThrow(
-                () -> new NoSuchElementException("Usuario no encontrado con nombre: " + rq.getUsuario().getNombre() + " y apellido: " + rq.getUsuario().getApellido())
+                
             );
             reser.setUsuario(user);
         }
         if(rq.getFuncion()!=null){
-            FuncionEntity fun = funcionRepository.findById(rq.getFuncion().getId()).orElseThrow(
-                () -> new NoSuchElementException("Función no encontrada con ID: " + rq.getFuncion().getId())
-            );
+            FuncionEntity fun = funcionRepository.findById(rq.getFuncion().getId()).orElseThrow();
             reser.setFuncion(fun);
             reser.setTotal(rq.getCantidadDeEntradas()*fun.getPrecio());
         }else{

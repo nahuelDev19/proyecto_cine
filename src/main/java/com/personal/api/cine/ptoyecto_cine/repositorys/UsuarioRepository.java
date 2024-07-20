@@ -7,8 +7,10 @@ import com.personal.api.cine.ptoyecto_cine.entitys.UsuarioEntity;
 import java.util.Optional;
 
 
+
 public interface UsuarioRepository extends JpaRepository<UsuarioEntity,Long>{
 
     Optional<UsuarioEntity> findByNombreAndApellido(String nombre, String apellido);
+    Optional<UsuarioEntity> findByNombre(String nombre);
 
 }
