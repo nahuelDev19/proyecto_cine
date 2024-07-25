@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.personal.api.cine.ptoyecto_cine.entitys.FuncionEntity;
 import com.personal.api.cine.ptoyecto_cine.entitys.ReservaEntity;
 import com.personal.api.cine.ptoyecto_cine.entitys.UsuarioEntity;
+import com.personal.api.cine.ptoyecto_cine.excepciones.IdNotFoudException;
 import com.personal.api.cine.ptoyecto_cine.models.request.ReservaRequest;
 import com.personal.api.cine.ptoyecto_cine.models.responses.FuncionesResponse;
 import com.personal.api.cine.ptoyecto_cine.models.responses.PeliculaResponse;
@@ -32,16 +33,12 @@ public class ReservasImplement implements IReservaService{
     public ReservasResponse create(ReservaRequest rq) {
         ReservaEntity reser= new ReservaEntity();
         if(rq.getUsuario() !=null && rq.getUsuario().getNombre() !=null){
-            UsuarioEntity user= usuarioRepository.findByNombre(rq.getUsuario().getNombre()).orElseThrow(()-> new RuntimeException(
-                "usuario no encontrado con el id: "+rq.getUsuario().getNombre()
-            ));
+            UsuarioEntity user= usuarioRepository.findByNombre(rq.getUsuario().getNombre()).orElseThrow(() -> new IdNotFoudException("usuario"));
         reser.setUsuario(user);}else{
             throw new RuntimeException("el usuario es necesario para crear una reserva");
         }
         if(rq.getFuncion()!=null && rq.getFuncion().getId()!=null){
-            FuncionEntity fun= funcionRepository.findById(rq.getFuncion().getId()).orElseThrow(()-> new RuntimeException(
-                "funcion no encontrada con id: "+ rq.getFuncion().getId()
-            ));
+            FuncionEntity fun= funcionRepository.findById(rq.getFuncion().getId()).orElseThrow(() -> new IdNotFoudException("funcion"));
             reser.setFuncion(fun);
             reser.setTotal(rq.getCantidadDeEntradas()*fun.getPrecio());
         }else{
@@ -63,13 +60,11 @@ public class ReservasImplement implements IReservaService{
         ReservaEntity reser= buscadorid(id);
         reser.setCantidadDeEntradas(rq.getCantidadDeEntradas());
         if(rq.getUsuario()!=null){
-            UsuarioEntity user= usuarioRepository.findByNombreAndApellido(rq.getUsuario().getNombre(),rq.getUsuario().getApellido()).orElseThrow(
-                
-            );
+            UsuarioEntity user= usuarioRepository.findByNombreAndApellido(rq.getUsuario().getNombre(),rq.getUsuario().getApellido()).orElseThrow();
             reser.setUsuario(user);
         }
         if(rq.getFuncion()!=null){
-            FuncionEntity fun = funcionRepository.findById(rq.getFuncion().getId()).orElseThrow();
+            FuncionEntity fun = funcionRepository.findById(rq.getFuncion().getId()).orElseThrow(() -> new IdNotFoudException("reserva"));
             reser.setFuncion(fun);
             reser.setTotal(rq.getCantidadDeEntradas()*fun.getPrecio());
         }else{
@@ -112,7 +107,7 @@ public class ReservasImplement implements IReservaService{
     }
 
     private ReservaEntity buscadorid(Long id){
-        return reservasRepository.findById(id).orElseThrow(() -> new RuntimeException("el id de reserva no a sido encontrado"));
+        return reservasRepository.findById(id).orElseThrow(() -> new IdNotFoudException("reserva"));
     }
 
 }

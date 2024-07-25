@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.personal.api.cine.ptoyecto_cine.entitys.FuncionEntity;
 import com.personal.api.cine.ptoyecto_cine.entitys.PeliculaEntity;
+import com.personal.api.cine.ptoyecto_cine.excepciones.IdNotFoudException;
 import com.personal.api.cine.ptoyecto_cine.models.request.FuncionRequest;
 import com.personal.api.cine.ptoyecto_cine.models.responses.FuncionesResponse;
 import com.personal.api.cine.ptoyecto_cine.models.responses.PeliculaResponse;
@@ -28,7 +29,7 @@ public class FuncionesImplement implements IFuncionService{
         fun.setFecha(rq.getFecha());
         fun.setHora(rq.getHora());
         if(rq.getPelicula().getTitulo()!=null){
-            PeliculaEntity nuevaPeli= peliculaRepository.findByTitulo(rq.getPelicula().getTitulo()).orElseThrow();
+            PeliculaEntity nuevaPeli= peliculaRepository.findByTitulo(rq.getPelicula().getTitulo()).orElseThrow(() -> new IdNotFoudException("titulo"));
             fun.setPelicula(nuevaPeli);        
         }
         fun.setPrecio(rq.getPrecio());
@@ -58,7 +59,7 @@ public class FuncionesImplement implements IFuncionService{
 
     @Override
     public void delete(Long id) {
-        FuncionEntity fun= funcionRepository.findById(id).orElseThrow();
+        FuncionEntity fun= funcionRepository.findById(id).orElseThrow(() -> new IdNotFoudException("funicon"));
         funcionRepository.delete(fun);
     }
 
@@ -74,7 +75,7 @@ public class FuncionesImplement implements IFuncionService{
     }
 
     private FuncionEntity buscadorId(Long id){
-        return funcionRepository.findById(id).orElseThrow();
+        return funcionRepository.findById(id).orElseThrow(() -> new IdNotFoudException("funicon"));
     }
 
 }

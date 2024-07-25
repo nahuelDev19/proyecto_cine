@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.personal.api.cine.ptoyecto_cine.entitys.PeliculaEntity;
+import com.personal.api.cine.ptoyecto_cine.excepciones.IdNotFoudException;
 import com.personal.api.cine.ptoyecto_cine.models.request.PeliculaRequest;
 import com.personal.api.cine.ptoyecto_cine.models.responses.PeliculaResponse;
 import com.personal.api.cine.ptoyecto_cine.repositorys.PeliculaRepository;
@@ -31,13 +32,13 @@ public class PeliculaImplement implements IPeliculaService{
 
     @Override
     public PeliculaResponse read(Long id) {
-        PeliculaEntity peli= peliculaRepository.findById(id).orElseThrow();
+        PeliculaEntity peli= peliculaRepository.findById(id).orElseThrow(() -> new IdNotFoudException("pelicula") );
         return this.pelRes(peli);
     }
 
     @Override
     public PeliculaResponse update(PeliculaRequest rq, Long id) {
-        PeliculaEntity peli= peliculaRepository.findById(id).orElseThrow();
+        PeliculaEntity peli= peliculaRepository.findById(id).orElseThrow(() -> new IdNotFoudException("pelicula"));
     
             PeliculaEntity peliActualiza= peli;
             peliActualiza.setTitulo(rq.getTitulo());
@@ -50,7 +51,7 @@ public class PeliculaImplement implements IPeliculaService{
 
     @Override
     public void delete(Long id) {
-        PeliculaEntity peli= peliculaRepository.findById(id).orElseThrow();
+        PeliculaEntity peli= peliculaRepository.findById(id).orElseThrow(() -> new IdNotFoudException("pelicula"));
         peliculaRepository.delete(peli);
     }
 
