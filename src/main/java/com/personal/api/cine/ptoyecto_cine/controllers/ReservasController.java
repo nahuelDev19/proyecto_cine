@@ -11,7 +11,6 @@ import com.personal.api.cine.ptoyecto_cine.models.responses.ReservasResponse;
 import com.personal.api.cine.ptoyecto_cine.services.IReservaService;
 import static com.personal.api.cine.ptoyecto_cine.uitils.ValidationResult.validation;
 
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -25,7 +24,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 @RestController @RequestMapping("/reservas")
 @Tag(name = "reservas", description = "Operaciones relacionadas con las reservas")
 public class ReservasController {
-
 
     @Autowired
     private IReservaService reservaService;

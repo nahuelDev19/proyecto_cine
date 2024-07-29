@@ -35,7 +35,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 @Tag(name = "peliculas", description = "Operaciones relacionadas con las peliculas")
 public class PeliculaController {
 
-
     @Autowired
     private PeliculaImplement peliService;
 
@@ -80,9 +79,4 @@ public class PeliculaController {
         peliService.delete(id);
         return ResponseEntity.noContent().build();
     }
-
-
-    
-
-
 }
