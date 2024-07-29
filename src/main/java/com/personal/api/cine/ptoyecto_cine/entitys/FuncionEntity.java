@@ -2,10 +2,12 @@ package com.personal.api.cine.ptoyecto_cine.entitys;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.HashSet;
 import java.util.Set;
 
 import com.personal.api.cine.ptoyecto_cine.uitils.SalaDeCine;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -31,8 +33,10 @@ public class FuncionEntity {
     private SalaDeCine sala;
     private Integer precio;
 
-    @OneToMany
+    @OneToMany(mappedBy = "funcion", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ReservaEntity> reserva;
+     
+
     @ManyToOne // Indica que muchas funciones pertenecen a una película
     private PeliculaEntity pelicula;
 }

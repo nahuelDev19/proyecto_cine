@@ -1,9 +1,13 @@
 package com.personal.api.cine.ptoyecto_cine.controllers;
 
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,10 +21,18 @@ import com.personal.api.cine.ptoyecto_cine.models.request.PeliculaRequest;
 import com.personal.api.cine.ptoyecto_cine.models.responses.PeliculaResponse;
 import com.personal.api.cine.ptoyecto_cine.services.PeliculaImplement;
 import com.personal.api.cine.ptoyecto_cine.uitils.GeneroPelicula;
+import static com.personal.api.cine.ptoyecto_cine.uitils.ValidationResult.validation;
+
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.PutMapping;
 
 
 @RestController @RequestMapping("/peliculas")
+@Tag(name = "peliculas", description = "Operaciones relacionadas con las peliculas")
 public class PeliculaController {
 
 
@@ -28,11 +40,16 @@ public class PeliculaController {
     private PeliculaImplement peliService;
 
     @PostMapping("/create")
-    public ResponseEntity<PeliculaResponse> createPeli(@RequestBody PeliculaRequest request){
+    @Operation(summary = "Crear una nuevo pelicula", description = "Crea una pelicula con los detalles proporcionados")
+    public ResponseEntity<?> createPeli(@Valid @RequestBody PeliculaRequest request, BindingResult result){
+        if (result.hasFieldErrors()) {
+            return validation(result);
+        }
         return ResponseEntity.ok(peliService.create(request));
     }
 
     @GetMapping("/page")
+    @Operation(summary = "muestra de todas las peliculas", description = "muestra todas las peliculas de forma paginada y tabien se hace un paginado por su genero")
     public ResponseEntity<Page<PeliculaResponse>> getAll(
         @RequestParam(defaultValue = "0") Integer page,
         @RequestParam(defaultValue = "10") Integer size,
@@ -42,19 +59,30 @@ public class PeliculaController {
         }
 
     @PutMapping("update/{id}")
-    public ResponseEntity<PeliculaResponse> updatePeli(@PathVariable Long id, @RequestBody PeliculaRequest entity) {        
+    @Operation(summary = "actualiza una pelicula", description = "actualiza los detalles de una pelicua")
+    public ResponseEntity<?> updatePeli(@Valid @RequestBody PeliculaRequest entity,BindingResult result,@PathVariable Long id) {     
+        if (result.hasFieldErrors()) {
+            return validation(result);
+        }   
         return ResponseEntity.ok(peliService.update(entity, id));
     }
 
     @GetMapping("/search/{id}")
+    @Operation(summary = "busca una pelicula", description = "busca una pelicula por su id")
     public ResponseEntity<PeliculaResponse> searchPeli(@PathVariable Long id){
         return ResponseEntity.ok(peliService.read(id));
     }
 
 
     @DeleteMapping("delete/{id}")
+    @Operation(summary = "elimina una pelicula", description = "elimina una pelicula segun su id")
     public ResponseEntity<Void> deletePeli(@PathVariable Long id){
         peliService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+
+    
+
+
 }

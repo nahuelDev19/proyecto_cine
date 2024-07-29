@@ -1,6 +1,5 @@
 package com.personal.api.cine.ptoyecto_cine.services;
 
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
@@ -9,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.personal.api.cine.ptoyecto_cine.entitys.UsuarioEntity;
+import com.personal.api.cine.ptoyecto_cine.excepciones.IdNotFoudException;
 import com.personal.api.cine.ptoyecto_cine.models.request.UsuarioRequest;
 import com.personal.api.cine.ptoyecto_cine.models.responses.UsuarioResponse;
 import com.personal.api.cine.ptoyecto_cine.repositorys.UsuarioRepository;
@@ -33,28 +33,32 @@ public class UsuarioImplement implements IUsuarioService{
 
     @Override
     public UsuarioResponse read(Long id) {
-        UsuarioEntity buscado= usuarioRepository.findById(id).orElseThrow();
+        UsuarioEntity buscado= usuarioRepository.findById(id).orElseThrow(() -> new IdNotFoudException("usuario"));
         return this.userResponse(buscado);
     }
 
     @Override
     public UsuarioResponse update(UsuarioRequest rq, Long id) {
-        Optional<UsuarioEntity> buscado= usuarioRepository.findById(id);
-        if (buscado.isPresent()){
-            UsuarioEntity user= buscado.get();
+        Optional<UsuarioEntity> buscado = usuarioRepository.findById(id);
+        if (buscado.isPresent()) {
+            UsuarioEntity user = buscado.get();
             user.setNombre(rq.getNombre());
             user.setApellido(rq.getApellido());
             user.setEmail(rq.getEmail());
             return userResponse(usuarioRepository.save(user));
-        }else {
-        // Manejar el caso donde no se encuentra el usuario con el id dado
-        throw new NoSuchElementException("Usuario no encontrado con id: " + id);
+        } else {
+            // Manejar el caso donde no se encuentra el usuario con el id dado
+            throw new IdNotFoudException("usuario");
+        }
     }
-    }
+    
+
+   
+
 
     @Override
     public void delete(Long id) {
-        UsuarioEntity usuario= usuarioRepository.findById(id).orElseThrow();
+        UsuarioEntity usuario= usuarioRepository.findById(id).orElseThrow(() -> new IdNotFoudException("usuario"));
         usuarioRepository.delete(usuario);
     }
 

@@ -15,5 +15,6 @@ public interface PeliculaRepository extends JpaRepository<PeliculaEntity,Long>{
     Page<PeliculaEntity> findByGenero(GeneroPelicula genero,Pageable pageable);
     Page<PeliculaEntity> findAll(Pageable pageable);
     Optional<PeliculaEntity> findByTitulo(String titulo);
+    boolean existsByTitulo(String titulo);
 
 }
