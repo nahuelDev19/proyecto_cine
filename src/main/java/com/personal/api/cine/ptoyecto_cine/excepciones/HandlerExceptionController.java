@@ -22,7 +22,7 @@ public class HandlerExceptionController {
     }
 
     @ExceptionHandler(IdNotFoudException.class)
-    public ResponseEntity<ErrorDto> idNotFound(Exception e){
+    public ResponseEntity<ErrorDto> idNotFound(IdNotFoudException e){
         ErrorDto error= new ErrorDto();
         error.setStatus(HttpStatus.NOT_FOUND.value());
         error.setMessage(e.getMessage());
@@ -30,4 +30,26 @@ public class HandlerExceptionController {
         error.setError("id no encontrado");
         return ResponseEntity.ok(error);   
     }
+
+
+    @ExceptionHandler(TituloException.class)
+    public ResponseEntity<ErrorDto> nombreExistente(TituloException e){
+        ErrorDto error= new ErrorDto();
+        error.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+        error.setMessage(e.getMessage());
+        error.setDate(new Date());
+        error.setError("este nombre ya se encuentra,trate con otro");
+        return ResponseEntity.ok(error);   
+    }
+
+    @ExceptionHandler(ClassNotExcist.class)
+    public ResponseEntity<ErrorDto> nombreExistente(ClassNotExcist e){
+        ErrorDto error= new ErrorDto();
+        error.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+        error.setMessage(e.getMessage());
+        error.setDate(new Date());
+        error.setError("busqueda sin exito");
+        return ResponseEntity.ok(error);   
+    }
+
 }

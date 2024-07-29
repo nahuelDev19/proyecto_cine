@@ -1,7 +1,10 @@
 package com.personal.api.cine.ptoyecto_cine.models.request;
 
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,15 +14,17 @@ import lombok.NoArgsConstructor;
 public class UsuarioRequest {
 
     
-    @NotBlank(message = "nombre no puede ser nulo o vacio")
+    @NotBlank
     private String nombre;
-    @NotBlank(message = "nombre no puede ser nulo o vacio")
+    @NotBlank
     private String apellido;
-    @NotBlank(message = "edad no puede ser nulo o vacio")
+    @NotNull
+    @Min(value = 18)
     private Integer edad;
-    @NotBlank(message = "email no puede ser nulo o vacio")
+    @NotBlank
+    @Email
     private String email;
-    @NotBlank(message = "password no puede ser nulo o vacio")
+    @NotBlank
     private String password;
     
 

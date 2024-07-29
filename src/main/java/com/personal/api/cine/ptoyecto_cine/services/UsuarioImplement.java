@@ -1,6 +1,5 @@
 package com.personal.api.cine.ptoyecto_cine.services;
 
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;

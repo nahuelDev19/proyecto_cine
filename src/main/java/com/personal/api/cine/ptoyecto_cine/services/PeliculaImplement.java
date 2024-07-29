@@ -6,15 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.personal.api.cine.ptoyecto_cine.entitys.PeliculaEntity;
 import com.personal.api.cine.ptoyecto_cine.excepciones.IdNotFoudException;
+import com.personal.api.cine.ptoyecto_cine.excepciones.TituloException;
 import com.personal.api.cine.ptoyecto_cine.models.request.PeliculaRequest;
 import com.personal.api.cine.ptoyecto_cine.models.responses.PeliculaResponse;
 import com.personal.api.cine.ptoyecto_cine.repositorys.PeliculaRepository;
 import com.personal.api.cine.ptoyecto_cine.uitils.GeneroPelicula;
 
-@Service 
+@Service @Transactional
 public class PeliculaImplement implements IPeliculaService{
 
     @Autowired
@@ -22,6 +24,9 @@ public class PeliculaImplement implements IPeliculaService{
 
     @Override
     public PeliculaResponse create(PeliculaRequest rq) {
+        if (peliculaRepository.existsByTitulo(rq.getTitulo())) {
+            throw new TituloException(rq.getTitulo());
+        }
        PeliculaEntity peli= new PeliculaEntity();
        peli.setTitulo(rq.getTitulo());
        peli.setDuracion(rq.getDuracion());
@@ -36,6 +41,7 @@ public class PeliculaImplement implements IPeliculaService{
         return this.pelRes(peli);
     }
 
+    @Transactional
     @Override
     public PeliculaResponse update(PeliculaRequest rq, Long id) {
         PeliculaEntity peli= peliculaRepository.findById(id).orElseThrow(() -> new IdNotFoudException("pelicula"));

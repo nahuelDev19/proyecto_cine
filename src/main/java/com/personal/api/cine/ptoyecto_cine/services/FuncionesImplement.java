@@ -1,5 +1,8 @@
 package com.personal.api.cine.ptoyecto_cine.services;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,29 +16,50 @@ import com.personal.api.cine.ptoyecto_cine.models.responses.FuncionesResponse;
 import com.personal.api.cine.ptoyecto_cine.models.responses.PeliculaResponse;
 import com.personal.api.cine.ptoyecto_cine.repositorys.FuncionRepository;
 import com.personal.api.cine.ptoyecto_cine.repositorys.PeliculaRepository;
+import com.personal.api.cine.ptoyecto_cine.repositorys.ReservationRepository;
+
 
 @Service @Transactional
 public class FuncionesImplement implements IFuncionService{
 
+    @Autowired
+    private ReservationRepository reservaRepository;
     @Autowired
     private FuncionRepository funcionRepository;
     @Autowired
     private PeliculaRepository peliculaRepository;
 
 
-    @Override
+    /* @Override
     public FuncionesResponse create(FuncionRequest rq) {
         FuncionEntity fun= new FuncionEntity();
         fun.setFecha(rq.getFecha());
         fun.setHora(rq.getHora());
         if(rq.getPelicula().getTitulo()!=null){
-            PeliculaEntity nuevaPeli= peliculaRepository.findByTitulo(rq.getPelicula().getTitulo()).orElseThrow(() -> new IdNotFoudException("titulo"));
+            PeliculaEntity nuevaPeli= peliculaRepository.findByTitulo(rq.getPelicula().getTitulo()).orElseThrow();
             fun.setPelicula(nuevaPeli);        
         }
         fun.setPrecio(rq.getPrecio());
         fun.setSala(rq.getSala());
         return this.funcionResponse(funcionRepository.save(fun));
+    } */
+    
+    @Override
+    public FuncionesResponse create(FuncionRequest rq) {
+        FuncionEntity fun= new FuncionEntity();
+        fun.setFecha(rq.getFecha());
+        fun.setHora(rq.getHora());
+        PeliculaEntity nuevaPeli= peliculaRepository.findByTitulo(rq.getPelicula().getTitulo()).orElseThrow();
+        fun.setPelicula(nuevaPeli);        
+        
+        fun.setPrecio(rq.getPrecio());
+        fun.setSala(rq.getSala());
+        return this.funcionResponse(funcionRepository.save(fun));
     }
+
+
+   
+
 
     @Override
     public FuncionesResponse read(Long id) {
@@ -57,9 +81,16 @@ public class FuncionesImplement implements IFuncionService{
         return funcionResponse(funcionRepository.save(funcionActulizada));
     }
 
+ 
+    @Transactional
     @Override
     public void delete(Long id) {
-        FuncionEntity fun= funcionRepository.findById(id).orElseThrow(() -> new IdNotFoudException("funicon"));
+        FuncionEntity fun = funcionRepository.findById(id)
+                .orElseThrow(() -> new IdNotFoudException("Función no encontrada"));
+
+        // Eliminar todas las reservaciones relacionadas funcion antes de eliminar la función
+        reservaRepository.deleteByFuncion(fun);
+        // eliminar la función
         funcionRepository.delete(fun);
     }
 
