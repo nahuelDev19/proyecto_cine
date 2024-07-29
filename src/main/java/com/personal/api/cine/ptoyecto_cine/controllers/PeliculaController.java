@@ -1,7 +1,6 @@
 package com.personal.api.cine.ptoyecto_cine.controllers;
 
-import java.util.HashMap;
-import java.util.Map;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

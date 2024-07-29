@@ -15,20 +15,49 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data @Builder @AllArgsConstructor @NoArgsConstructor
+/**
+ * Representa una película en el sistema.
+ * Incluye detalles como título, descripción, duración y género.
+ */
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
-@Table(name = "peliculas")  
+@Table(name = "peliculas")
 public class PeliculaEntity {
 
-
+    /**
+     * Identificador único de la película.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    /**
+     * Título de la película.
+     */
     private String titulo;
+
+    /**
+     * Descripción de la película.
+     */
     private String descripcion;
+
+    /**
+     * Duración de la película en minutos.
+     */
     private Integer duracion;
+
+    /**
+     * Género de la película.
+     */
     private GeneroPelicula genero;
 
-    @OneToMany(mappedBy = "pelicula") // Relación inversa: una película puede tener muchas funciones
+    /**
+     * Conjunto de funciones asociadas a esta película.
+     * Una película puede tener muchas funciones.
+     */
+    @OneToMany(mappedBy = "pelicula")
     private Set<FuncionEntity> funciones;
 }
